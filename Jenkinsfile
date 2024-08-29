@@ -8,9 +8,7 @@ pipeline {
         PRODUCTION_ENVIRONMENT = 'PULUNUWAN YASISURU RUBASIN JAYASEKERA'
     
     }
-
     
-
     stages{
         stage('Build'){
             steps {
@@ -21,7 +19,7 @@ pipeline {
                 success {
                     emailext to: 'pulunuwanyasisuru@gmail.com',
                              subject: "Security Scan SUCCESS: ${currentBuild.fullDisplayName}",
-                             body: "The security scan completed successfully."
+                             body: "The security scan completed successfully.",
                              attachLog: true
                 }
                 failure {
