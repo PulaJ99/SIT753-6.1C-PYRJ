@@ -30,6 +30,7 @@ pipeline {
                              body: "The security scan failed. Check the attached logs.",
                              attachLog: true
                 }
+            }
         }
         stage('Test'){
             steps {
