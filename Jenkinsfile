@@ -19,7 +19,8 @@ pipeline {
                 success {
                     emailext to: 'pulunuwanyasisuru@gmail.com',
                              subject: "Security Scan ${currentBuild.result}: ${currentBuild.fullDisplayName}",
-                             body: "The security scan completed successfully.",
+                             body: """The security scan completed successfully.
+                                       Next line is this""",
                              attachLog: true
                 }
                 failure {
