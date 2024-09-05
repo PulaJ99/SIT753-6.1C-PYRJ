@@ -1,4 +1,3 @@
-// Testing comments
 pipeline {
     agent any
 
@@ -8,54 +7,103 @@ pipeline {
         PRODUCTION_ENVIRONMENT = 'PULUNUWAN YASISURU RUBASIN JAYASEKERA'
     
     }
-    // comment added
+
     stages{
         stage('Build'){
             steps {
-                echo "fetch the source code from ${env.DIRECTORY_PATH}"
-                echo "compile the code and generate any necessary artifacts"
+                echo " Stage: Build"
+                echo "Build the code using a build automation tool to compile and package your code"
+                echo "Tools: Maven, NPM"
+            }
+        }
+        stage('Unit and Integration Tests'){
+            steps {
+                echo " Stage: Unit and Integration Tests"
+                echo "Run unit tests to ensure the code functions as expected and run integration tests to ensure the different components of the application work together as expected."
+                echo "Tools: JUnit, Selenium "
             }
             post {
                 success {
                     emailext to: 'pulunuwanyasisuru@gmail.com',
-                             subject: "Security Scan ${currentBuild.result}: ${currentBuild.fullDisplayName}",
-                             body: "The security scan completed successfully.\n" +
-                                   "This the next line. ",
+                             subject: "Unit and and Integration Testing ${currentBuild.result}: ${currentBuild.fullDisplayName}",
+                             body: "The Unit and Integration testing status: ${currentBuild.result}.\n" +
+                                   "Check the attached logs for more details.",
                              attachLog: true
                 }
                 failure {
                     emailext to: 'pulunuwanyasisuru@gmail.com',
-                             subject: "Security Scan FAILED: ${currentBuild.fullDisplayName}",
-                             body: "The security scan failed. Check the attached logs.",
+                             subject: "Unit and and Integration Testing ${currentBuild.result}: ${currentBuild.fullDisplayName}",
+                             body: "The Unit and Integration testing status: ${currentBuild.result}.\n" +
+                                   "Check the attached logs for more details.",
                              attachLog: true
                 }
             }
         }
-        stage('Test'){
+        stage('Code Analysis'){
             steps {
-                echo "unit tests"
-                echo "integration tests"
+                echo " Stage: Code Analysis"
+                echo "Integrate a code analysis tool to analyse the code and ensure it meets industry standards."
+                echo "Tools: SonarQube, PMD"
             }
         }
-        stage('Code Quality Check'){
+        stage ('Security Scan'){
             steps {
-                echo "check the quality of the code"
+                echo " Stage: Security Scan"
+                echo "Perform a security scan on the code using a tool to identify any vulnerabilities."
+                echo "Tools: Orca, Snyk"
+            }
+            post {
+                success {
+                    emailext to: 'pulunuwanyasisuru@gmail.com',
+                             subject: "Security Scanning ${currentBuild.result}: ${currentBuild.fullDisplayName}",
+                             body: "The Security scanning status: ${currentBuild.result}.\n" +
+                                   "Check the attached logs for more details.",
+                             attachLog: true
+                }
+                failure {
+                    emailext to: 'pulunuwanyasisuru@gmail.com',
+                             subject: "Security Scanning ${currentBuild.result}: ${currentBuild.fullDisplayName}",
+                             body: "The Security scanning status: ${currentBuild.result}.\n" +
+                                   "Check the attached logs for more details.",
+                             attachLog: true
+                }
             }
         }
-        stage ('Deploy'){
+        stage ('Deploy to staging'){
             steps {
-                echo "deploy the application to a testing environment : ${env.TESTING_ENVIRONMENT}"
+                echo " Stage: Deploy to Staging"
+                echo "Deploy the application to a staging server (e.g., AWS EC2 instance"
+                echo "Tools: Ansible, Puppet"
             }
         }
-        stage ('Approval'){
+        stage ('Integration Tests on Staging'){
             steps {
-                echo "Approval required"
-                sleep(10)
+                echo "Integration Tests on Staging"
+                echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment"
+                echo "Tools: Selenium, Jmeter, Postman"
+            }
+            post {
+                success {
+                    emailext to: 'pulunuwanyasisuru@gmail.com',
+                             subject: "Integration Testing on Staging ${currentBuild.result}: ${currentBuild.fullDisplayName}",
+                             body: "The Integration Testing on Staging status: ${currentBuild.result}.\n" +
+                                   "Check the attached logs for more details.",
+                             attachLog: true
+                }
+                failure {
+                    emailext to: 'pulunuwanyasisuru@gmail.com',
+                             subject: "Integration Testing on Staging ${currentBuild.result}: ${currentBuild.fullDisplayName}",
+                             body: "The Integration Testing on Staging status: ${currentBuild.result}.\n" +
+                                   "Check the attached logs for more details.",
+                             attachLog: true
+                }
             }
         }
         stage ('Deploy to Production'){
             steps {
-                echo "Deploy the code to production environment: ${env.PRODUCTION_ENVIRONMENT}"
+                echo "Deploy to Production"
+                echo "Deploy the application to a production server"
+                echo "Tools: Ansible, Puppet"
             }
         }
     }
