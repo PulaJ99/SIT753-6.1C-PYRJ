@@ -108,3 +108,5 @@ pipeline {
         }
     }
 }
+
+// Adding a comment to run the pipeline by the comment
